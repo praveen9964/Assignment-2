@@ -1,8 +1,8 @@
 Input
-.\a.out 5
+./a.out 9
 
 Output
-5
+F(9) = 34
 
 Basic operation
 multiplication.
