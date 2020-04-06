@@ -16,7 +16,7 @@ Instructions
 
 Details on Example invocation and output
 Input
-.\a.out 5
+./a.out 5
 
 Output
 5
