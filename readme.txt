@@ -19,7 +19,7 @@ Input
 ./a.out 5
 
 Output
-5
+F(5) = 5
 
 Challenges faced
 1. Looking for an efficient logic i.e, formulas.
