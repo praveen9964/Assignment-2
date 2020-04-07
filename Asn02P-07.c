@@ -1,42 +1,44 @@
 #include <stdio.h> 
 #include <stdlib.h>
-  
-void multiply(int F[2][2], int M[2][2])
+#include <string.h>
+int c[2][2];
+void pow_mul(int a[],int b[],int d[][2])
 {
-  int x =  F[0][0]*M[0][0] + F[0][1]*M[1][0]; 
-  int y =  F[0][0]*M[0][1] + F[0][1]*M[1][1]; 
-  int z =  F[1][0]*M[0][0] + F[1][1]*M[1][0]; 
-  int w =  F[1][0]*M[0][1] + F[1][1]*M[1][1]; 
-  
-  F[0][0] = x; 
-  F[0][1] = y; 
-  F[1][0] = z; 
-  F[1][1] = w; 
+	static int x = 0,y = 0;
+	if(x >= 2)
+		return;
+	if(y < 2)
+	{
+		b[x] += a[y] * d[y][x];
+		y++;
+		pow_mul(a,b,d);					
+	}
+	y = 0;
+	x++;
+	pow_mul(a,b,d);
 }
-void power(int F[2][2], int n)
+
+int power(int n)
 {
-  if( n == 0 || n == 1) 
-      return; 
-  int M[2][2] = {{1,1},{1,0}}; 
-  
-  power(F, n/2); 
-  multiply(F, F); 
-  
-  if (n%2 != 0) 
-     multiply(F, M); 
-}  
-int fib(int n) 
-{ 
-  int F[2][2] = {{1,1},{1,0}}; 
-  if (n == 0) 
-    return 0; 
-  power(F, n-1); 
-  return F[0][0]; 
-} 
+	static int a[][2] = {0,1,1,1},F[2] = {0,1},t[2]= {0},b[][2] = {0,1,1,1};
+	int c[2][2] = {0};
+	for(int i = 0;i<2;i++)
+		for(int j = 0;j<2;j++)
+			for(int k = 0;k<2;k++)
+				c[i][j] += a[i][k]*b[k][j];
+	memcpy(a,c,sizeof(a));
+	n--;
+	if(n == 1)
+	{
+		pow_mul(F,t,c);	
+		return(t[0]);
+	}
+	power(n--);
+}
   
 int main(int argc, char* argv[]) 
 { 
-  int n = atoi(argv[1]); 
-  printf("F(%d) = %d\n",n,fib(n)); 
-  return 0; 
+	int n = atoi(argv[1]); 
+	printf("F(%d) = %d\n",n,power(n)); 
+	return 0; 
 } 
